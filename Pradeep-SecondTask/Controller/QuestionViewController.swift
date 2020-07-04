@@ -23,7 +23,29 @@ class QuestionViewController: UIViewController {
     }
     
 }
-
+extension QuestionViewController: QuestionCellDelegate{
+    func customCell(cell: JumbledTableViewCell, didTappedDropDown button: UIButton) {
+        
+        if let viewWithTag = self.view.viewWithTag(101) {
+            viewWithTag.removeFromSuperview()
+        }
+        //self.questionTableView.isUserInteractionEnabled = false
+        /* Get the souce rect frame */
+        let buttonFrame = button.frame
+        var showRect    = cell.convert(buttonFrame, to: self.questionTableView)
+        showRect        = self.questionTableView.convert(showRect, to: view)
+        let yCord = (showRect.origin.y + showRect.size.height)
+        print("rect \(showRect)")
+        print("y = \(showRect.origin.y)")
+        print("yCord = \(yCord)")
+        
+        let dropDownView = UIView.init(frame: CGRect(x: showRect.origin.x - 40, y: yCord, width: 50, height: 100))
+        dropDownView.tag = 101
+        dropDownView.backgroundColor = .green
+        self.view.addSubview(dropDownView)
+    }
+    
+}
 extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -65,7 +87,7 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "jumbledCell", for: indexPath) as! JumbledTableViewCell
-    
+            cell.delegate = self
             cell.jumbledLbl.layer.cornerRadius = 10
             cell.jumbledLbl.clipsToBounds = true
             

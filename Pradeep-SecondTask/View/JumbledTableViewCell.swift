@@ -8,10 +8,13 @@
 
 import UIKit
 
+protocol QuestionCellDelegate:class {
+    func customCell(cell:JumbledTableViewCell, didTappedDropDown button:UIButton)
+}
 class JumbledTableViewCell: UITableViewCell {
     
     @IBOutlet weak var jumbledLbl: UILabel!
-
+    weak var delegate:QuestionCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,5 +29,7 @@ class JumbledTableViewCell: UITableViewCell {
 
     @IBAction func onDropDownBtnClicked(_ sender: Any) {
         print("btn pressed")
+        let button = sender as! UIButton
+        self.delegate?.customCell(cell: self, didTappedDropDown: button)
     }
 }
