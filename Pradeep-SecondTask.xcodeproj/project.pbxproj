@@ -9,21 +9,25 @@
 /* Begin PBXBuildFile section */
 		2754F68524B0ECA500279823 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F68424B0ECA500279823 /* AppDelegate.swift */; };
 		2754F68724B0ECA500279823 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F68624B0ECA500279823 /* SceneDelegate.swift */; };
-		2754F68924B0ECA500279823 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F68824B0ECA500279823 /* ViewController.swift */; };
 		2754F68C24B0ECA500279823 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2754F68A24B0ECA500279823 /* Main.storyboard */; };
 		2754F68E24B0ECA800279823 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 2754F68D24B0ECA800279823 /* Assets.xcassets */; };
 		2754F69124B0ECA800279823 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2754F68F24B0ECA800279823 /* LaunchScreen.storyboard */; };
+		2754F69F24B0F0B900279823 /* QuestionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F69E24B0F0B900279823 /* QuestionViewController.swift */; };
+		2754F6A124B0F1D700279823 /* JumbledTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F6A024B0F1D700279823 /* JumbledTableViewCell.swift */; };
+		2754F6A324B0F1FF00279823 /* SequenceTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F6A224B0F1FF00279823 /* SequenceTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		2754F68124B0ECA500279823 /* Pradeep-SecondTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pradeep-SecondTask.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2754F68424B0ECA500279823 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2754F68624B0ECA500279823 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		2754F68824B0ECA500279823 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		2754F68B24B0ECA500279823 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		2754F68D24B0ECA800279823 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		2754F69024B0ECA800279823 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		2754F69224B0ECA800279823 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		2754F69E24B0F0B900279823 /* QuestionViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionViewController.swift; sourceTree = "<group>"; };
+		2754F6A024B0F1D700279823 /* JumbledTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = JumbledTableViewCell.swift; sourceTree = "<group>"; };
+		2754F6A224B0F1FF00279823 /* SequenceTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SequenceTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,15 +60,33 @@
 		2754F68324B0ECA500279823 /* Pradeep-SecondTask */ = {
 			isa = PBXGroup;
 			children = (
+				2754F69D24B0F09A00279823 /* Controller */,
+				2754F69C24B0F09000279823 /* View */,
 				2754F68424B0ECA500279823 /* AppDelegate.swift */,
 				2754F68624B0ECA500279823 /* SceneDelegate.swift */,
-				2754F68824B0ECA500279823 /* ViewController.swift */,
 				2754F68A24B0ECA500279823 /* Main.storyboard */,
 				2754F68D24B0ECA800279823 /* Assets.xcassets */,
 				2754F68F24B0ECA800279823 /* LaunchScreen.storyboard */,
 				2754F69224B0ECA800279823 /* Info.plist */,
 			);
 			path = "Pradeep-SecondTask";
+			sourceTree = "<group>";
+		};
+		2754F69C24B0F09000279823 /* View */ = {
+			isa = PBXGroup;
+			children = (
+				2754F6A024B0F1D700279823 /* JumbledTableViewCell.swift */,
+				2754F6A224B0F1FF00279823 /* SequenceTableViewCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		2754F69D24B0F09A00279823 /* Controller */ = {
+			isa = PBXGroup;
+			children = (
+				2754F69E24B0F0B900279823 /* QuestionViewController.swift */,
+			);
+			path = Controller;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -138,9 +160,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				2754F68924B0ECA500279823 /* ViewController.swift in Sources */,
+				2754F6A324B0F1FF00279823 /* SequenceTableViewCell.swift in Sources */,
 				2754F68524B0ECA500279823 /* AppDelegate.swift in Sources */,
 				2754F68724B0ECA500279823 /* SceneDelegate.swift in Sources */,
+				2754F69F24B0F0B900279823 /* QuestionViewController.swift in Sources */,
+				2754F6A124B0F1D700279823 /* JumbledTableViewCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
