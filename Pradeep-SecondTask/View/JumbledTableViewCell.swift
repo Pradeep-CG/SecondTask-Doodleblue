@@ -14,11 +14,33 @@ protocol QuestionCellDelegate:class {
 class JumbledTableViewCell: UITableViewCell {
     
     @IBOutlet weak var jumbledLbl: UILabel!
+    
     weak var delegate:QuestionCellDelegate?
+    @IBOutlet weak var dropDownBtn: UIButton!
+    @IBOutlet weak var selectedNoLbl: UILabel!
+    
+    var cellData:QuestionModel?{
+        didSet{
+            jumbledLbl.text = cellData?.question
+            let srNo = cellData?.serialNo ?? ""
+            
+            if srNo.isEmpty {
+                selectedNoLbl.text = ""
+                dropDownBtn.isHidden = false
+            }
+            else{
+                selectedNoLbl.text = srNo
+                dropDownBtn.isHidden = true
+            }
+        }
+    }
     
     override func awakeFromNib() {
         super.awakeFromNib()
         // Initialization code
+        
+        jumbledLbl.layer.cornerRadius = 10
+        jumbledLbl.clipsToBounds = true
     }
 
     override func setSelected(_ selected: Bool, animated: Bool) {

@@ -13,6 +13,7 @@ class SequenceTableViewCell: UITableViewCell {
     @IBOutlet weak var sequenceLbl: UILabel!
     @IBOutlet weak var serialNoLbl: UILabel!
     
+
     
     override func awakeFromNib() {
         super.awakeFromNib()

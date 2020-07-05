@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		2751096724B1F27700F27DD5 /* QuestionModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2751096624B1F27700F27DD5 /* QuestionModel.swift */; };
+		2751096A24B1F47700F27DD5 /* Common.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2751096924B1F47700F27DD5 /* Common.swift */; };
 		2754F68524B0ECA500279823 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F68424B0ECA500279823 /* AppDelegate.swift */; };
 		2754F68724B0ECA500279823 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 2754F68624B0ECA500279823 /* SceneDelegate.swift */; };
 		2754F68C24B0ECA500279823 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 2754F68A24B0ECA500279823 /* Main.storyboard */; };
@@ -18,6 +20,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		2751096624B1F27700F27DD5 /* QuestionModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = QuestionModel.swift; sourceTree = "<group>"; };
+		2751096924B1F47700F27DD5 /* Common.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Common.swift; sourceTree = "<group>"; };
 		2754F68124B0ECA500279823 /* Pradeep-SecondTask.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Pradeep-SecondTask.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		2754F68424B0ECA500279823 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		2754F68624B0ECA500279823 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -41,6 +45,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		2751096524B1F26700F27DD5 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				2751096624B1F27700F27DD5 /* QuestionModel.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
+		2751096824B1F46B00F27DD5 /* Commom */ = {
+			isa = PBXGroup;
+			children = (
+				2751096924B1F47700F27DD5 /* Common.swift */,
+			);
+			path = Commom;
+			sourceTree = "<group>";
+		};
 		2754F67824B0ECA500279823 = {
 			isa = PBXGroup;
 			children = (
@@ -60,6 +80,8 @@
 		2754F68324B0ECA500279823 /* Pradeep-SecondTask */ = {
 			isa = PBXGroup;
 			children = (
+				2751096824B1F46B00F27DD5 /* Commom */,
+				2751096524B1F26700F27DD5 /* Model */,
 				2754F69D24B0F09A00279823 /* Controller */,
 				2754F69C24B0F09000279823 /* View */,
 				2754F68424B0ECA500279823 /* AppDelegate.swift */,
@@ -163,8 +185,10 @@
 				2754F6A324B0F1FF00279823 /* SequenceTableViewCell.swift in Sources */,
 				2754F68524B0ECA500279823 /* AppDelegate.swift in Sources */,
 				2754F68724B0ECA500279823 /* SceneDelegate.swift in Sources */,
+				2751096724B1F27700F27DD5 /* QuestionModel.swift in Sources */,
 				2754F69F24B0F0B900279823 /* QuestionViewController.swift in Sources */,
 				2754F6A124B0F1D700279823 /* JumbledTableViewCell.swift in Sources */,
+				2751096A24B1F47700F27DD5 /* Common.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
