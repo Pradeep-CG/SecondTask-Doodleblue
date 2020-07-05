@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol sequeceCellDelegate:class {
+protocol SequenceCellDelegate:class {
     func selectedSequenceCell(cell:SequenceTableViewCell, didTappedEraseDown button:UIButton)
 }
 class SequenceTableViewCell: UITableViewCell {
@@ -18,7 +18,7 @@ class SequenceTableViewCell: UITableViewCell {
     
     @IBOutlet weak var eraseBtn: UIButton!
     
-    weak var delegate:sequeceCellDelegate?
+    weak var delegate:SequenceCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()

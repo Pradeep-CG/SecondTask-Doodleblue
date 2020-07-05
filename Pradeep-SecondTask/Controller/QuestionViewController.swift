@@ -126,9 +126,24 @@ extension QuestionViewController: QuestionCellDelegate{
    }
 }
 
-extension QuestionViewController: sequeceCellDelegate{
+extension QuestionViewController: SequenceCellDelegate{
+    
     func selectedSequenceCell(cell: SequenceTableViewCell, didTappedEraseDown button: UIButton) {
         
+        guard let indexPath = self.questionTableView.indexPath(for: cell) else { return }
+        print("Button tapped on row \(indexPath.row)")
+       
+        for item in 0..<questionArray!.count {
+            if questionArray?[item].question == sequenceDictionary["\(indexPath.row + 1)"] {
+                let serialNo = Int(questionArray?[item].serialNo ?? "0") ?? 0
+                dropdownArray.append(serialNo)
+                dropdownArray = dropdownArray.sorted()
+                questionArray?[item].serialNo = ""
+            }
+        }
+        sequenceDictionary["\(indexPath.row + 1)"] = nil
+        self.questionTableView.reloadData()
+        print(sequenceDictionary)
     }
 }
 
@@ -141,12 +156,13 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
         label.frame = CGRect.init(x: 0, y: 0, width: headerView.frame.width, height: headerView.frame.height)
         label.textAlignment = .center
         label.textColor = .white
-        
+        label.numberOfLines = 2
+        label.lineBreakMode = .byWordWrapping
         if section == 0 {
-            label.text = "Use the dropdown to set the correct order"
+            label.text = "* The given statements are in jumbled order, Use the dropdown to set the correct order"
         }
         else{
-            label.text = "Ordered in the corrent sequence"
+            label.text = "Here the question will be ordered in the corrent sequence"
         }
         label.font = UIFont(name: "futuraPTMediumFont", size: 16) // my custom font
        //f label.textColor = UIColor.gray// my custom colour
@@ -184,6 +200,7 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "sequenceCell", for: indexPath) as! SequenceTableViewCell
             cell.selectionStyle = .none
+            cell.delegate = self
             cell.serialNoLbl.text = "\(indexPath.row + 1)."
             if let question = sequenceDictionary["\(indexPath.row + 1)"] {
                 cell.sequenceLbl.text = question
