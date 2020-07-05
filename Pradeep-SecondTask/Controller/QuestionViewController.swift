@@ -11,49 +11,130 @@ import UIKit
 class QuestionViewController: UIViewController {
 
     @IBOutlet weak var questionTableView: UITableView!
+    var questionArray = [String]()
+    var dropdownArray = [Int]()
+    var sequenceDictionary = [String:String]()
+    var selectedRowIndex = -1
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
+        
+        generateQuestionData()
+        generateDropDownArray()
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(self.handleTap(_:)))
+        questionTableView.addGestureRecognizer(tap)
         
     }
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(true)
         
     }
-    
-}
-extension QuestionViewController: QuestionCellDelegate{
-    func customCell(cell: JumbledTableViewCell, didTappedDropDown button: UIButton) {
+    func generateQuestionData() {
         
+        questionArray.append("This is the third sentence")
+        questionArray.append("This is the second sentence, example of having more words when compared to the first one")
+        questionArray.append("This is the seventh sentence, example of having more words when compared to the sixth one")
+        questionArray.append("This is the first sentence, example of having more words when compared to the third one")
+        questionArray.append("This is the sixth sentence")
+        questionArray.append("This is the fifth sentence, example of having more words when compared to the fourth one")
+        questionArray.append("This is the fourth sentence")
+    }
+    
+    func generateDropDownArray() {
+        
+        for item in 0..<questionArray.count {
+            dropdownArray.append(item + 1)
+        }
+        print("dropdown array = \(dropdownArray)")
+    }
+    @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
+        
+        removeDropDownView()
+    }
+    
+    func removeDropDownView() {
         if let viewWithTag = self.view.viewWithTag(101) {
             viewWithTag.removeFromSuperview()
+            selectedRowIndex = -1
         }
-        //self.questionTableView.isUserInteractionEnabled = false
-        /* Get the souce rect frame */
-        let buttonFrame = button.frame
-        var showRect    = cell.convert(buttonFrame, to: self.questionTableView)
-        showRect        = self.questionTableView.convert(showRect, to: view)
-        let yCord = (showRect.origin.y + showRect.size.height)
-        print("rect \(showRect)")
-        print("y = \(showRect.origin.y)")
-        print("yCord = \(yCord)")
-        
-        let dropDownView = UIView.init(frame: CGRect(x: showRect.origin.x - 40, y: yCord, width: 50, height: 100))
-        dropDownView.tag = 101
-        dropDownView.backgroundColor = .green
-        self.view.addSubview(dropDownView)
     }
+}
+
+extension QuestionViewController: QuestionCellDelegate{
+    
+    func customCell(cell: JumbledTableViewCell, didTappedDropDown button: UIButton) {
+        
+        removeDropDownView()
+        
+        guard let indexPath = self.questionTableView.indexPath(for: cell) else { return }
+        print("Button tapped on row \(indexPath.row)")
+        
+        if indexPath.row == selectedRowIndex {
+            selectedRowIndex = -1
+        }
+        else{
+            selectedRowIndex = indexPath.row
+            
+            let buttonFrame = button.frame
+            var showRect    = cell.convert(buttonFrame, to: self.questionTableView)
+            showRect        = self.questionTableView.convert(showRect, to: view)
+            
+            let yCord = (showRect.origin.y + showRect.size.height)
+            
+            print("rect \(showRect)")
+            print("y = \(showRect.origin.y)")
+            print("yCord = \(yCord)")
+            
+            var yCoordinate:CGFloat = 0.0
+            let widthValue:CGFloat = 50.0
+            let heightValue:CGFloat = 30 * CGFloat(dropdownArray.count)
+            
+            let dropDownView = UIView.init(frame: CGRect(x: showRect.origin.x - 45, y: yCord, width: widthValue, height: heightValue))
+            dropDownView.tag = 101
+            dropDownView.backgroundColor = .white
+            dropDownView.layer.borderWidth = 1
+            dropDownView.layer.borderColor = UIColor.gray.cgColor
+            
+            for item in 0..<dropdownArray.count {
+                let button = UIButton.init(frame: CGRect(x: 0, y: yCoordinate, width: widthValue, height: 30))
+                button.setTitle("\(dropdownArray[item])", for: .normal)
+                button.setTitleColor(.black, for: .normal)
+                button.tag = item
+                button.addTarget(self, action: #selector(self.onDropDownBtnClicked), for: .touchUpInside)
+                dropDownView.addSubview(button)
+                
+                yCoordinate = yCoordinate + 25
+                
+                let label = UILabel.init(frame: CGRect(x: 0, y: yCoordinate - 1, width: widthValue, height: 1))
+                label.backgroundColor = .lightGray
+                dropDownView.addSubview(label)
+            }
+            self.view.addSubview(dropDownView)
+            //self.questionTableView.addSubview(dropDownView)
+        }
+    }
+    
+   @objc func onDropDownBtnClicked(sender: UIButton!) {
+       
+      print("button tag =\(sender.tag)")
+      removeDropDownView()
+      dropdownArray.remove(at: sender.tag)
+      print("removed array = \(dropdownArray)")
+     
+   }
     
 }
 extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         let headerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        headerView.backgroundColor = .white
+        headerView.backgroundColor = .gray
         let label = UILabel()
         label.frame = CGRect.init(x: 0, y: 0, width: headerView.frame.width, height: headerView.frame.height)
         label.textAlignment = .center
+        label.textColor = .white
+        
         if section == 0 {
             label.text = "Use the dropdown to set the correct order"
         }
@@ -61,17 +142,18 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
             label.text = "Ordered in the corrent sequence"
         }
         label.font = UIFont(name: "futuraPTMediumFont", size: 16) // my custom font
-        label.textColor = UIColor.gray// my custom colour
+       //f label.textColor = UIColor.gray// my custom colour
 
         headerView.addSubview(label)
 
         return headerView
     }
+    /*
     func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
         let footerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        footerView.backgroundColor = .blue
+        footerView.backgroundColor = .gray
         return footerView
-    }
+    }*/
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -79,7 +161,7 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
         return 2
     }
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 4
+        return questionArray.count
     }
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         return UITableView.automaticDimension
@@ -87,35 +169,30 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
             let cell = tableView.dequeueReusableCell(withIdentifier: "jumbledCell", for: indexPath) as! JumbledTableViewCell
+            cell.selectionStyle = .none
             cell.delegate = self
             cell.jumbledLbl.layer.cornerRadius = 10
             cell.jumbledLbl.clipsToBounds = true
-            
-            if indexPath.row == 0 {
-                cell.jumbledLbl.text = "This is third sentence"
-            }
-            if indexPath.row == 1 {
-                cell.jumbledLbl.text = "This is second sentense ,example for having more words when compared to first one"
-            }
-            if indexPath.row == 2 {
-                cell.jumbledLbl.text = "This is first sentense ,example for having more words when compared to first one,example for having more words when compared to first one, ,example for having more words when compared to first one"
-            }
+            cell.jumbledLbl.text = questionArray[indexPath.row]
             return cell
         }
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "sequenceCell", for: indexPath) as! SequenceTableViewCell
-            if indexPath.row == 0 {
-                cell.sequenceLbl.text = "This is third sentence"
-            }
-            if indexPath.row == 1 {
-                cell.sequenceLbl.text = "This is second sentense ,example for having more words when compared to first one"
-            }
-            if indexPath.row == 2 {
-                cell.sequenceLbl.text = "This is first sentense ,example for having more words when compared to first one,example for having more words when compared to first one, ,example for having more words when compared to first one"
-            }
+            cell.selectionStyle = .none
+            cell.serialNoLbl.text = "\(indexPath.row + 1)"
+//            if indexPath.row == 0 {
+//                cell.sequenceLbl.text = "This is third sentence"
+//            }
+//            if indexPath.row == 1 {
+//                cell.sequenceLbl.text = "This is second sentense ,example for having more words when compared to first one"
+//            }
+//            if indexPath.row == 2 {
+//                cell.sequenceLbl.text = "This is first sentense ,example for having more words when compared to first one,example for having more words when compared to first one, ,example for having more words when compared to first one"
+//            }
             return cell
         }
     }
+    /*
     func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
         if section == 0 {
             return 60.0
@@ -124,5 +201,5 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
             return 0.0
         }
     }
-
+*/
 }
