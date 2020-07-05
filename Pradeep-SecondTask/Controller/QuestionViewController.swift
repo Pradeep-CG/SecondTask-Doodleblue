@@ -49,7 +49,7 @@ class QuestionViewController: UIViewController {
 
 extension QuestionViewController: QuestionCellDelegate{
     
-    func customCell(cell: JumbledTableViewCell, didTappedDropDown button: UIButton) {
+    func selectedQuestionCell(cell: JumbledTableViewCell, didTappedDropDown button: UIButton) {
         
         if let viewWithTag = self.view.viewWithTag(101) {
             viewWithTag.removeFromSuperview()
@@ -123,11 +123,15 @@ extension QuestionViewController: QuestionCellDelegate{
           viewWithTag.removeFromSuperview()
           self.selectedRowIndex = -1
       }
-    
-     
    }
-    
 }
+
+extension QuestionViewController: sequeceCellDelegate{
+    func selectedSequenceCell(cell: SequenceTableViewCell, didTappedEraseDown button: UIButton) {
+        
+    }
+}
+
 extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -180,12 +184,14 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
         else{
             let cell = tableView.dequeueReusableCell(withIdentifier: "sequenceCell", for: indexPath) as! SequenceTableViewCell
             cell.selectionStyle = .none
-            cell.serialNoLbl.text = "\(indexPath.row + 1)"
+            cell.serialNoLbl.text = "\(indexPath.row + 1)."
             if let question = sequenceDictionary["\(indexPath.row + 1)"] {
                 cell.sequenceLbl.text = question
+                cell.eraseBtn.isHidden = false
             }
             else{
                 cell.sequenceLbl.text = " "
+                cell.eraseBtn.isHidden = true
             }
             return cell
         }

@@ -9,7 +9,7 @@
 import UIKit
 
 protocol QuestionCellDelegate:class {
-    func customCell(cell:JumbledTableViewCell, didTappedDropDown button:UIButton)
+    func selectedQuestionCell(cell:JumbledTableViewCell, didTappedDropDown button:UIButton)
 }
 class JumbledTableViewCell: UITableViewCell {
     
@@ -52,6 +52,6 @@ class JumbledTableViewCell: UITableViewCell {
     @IBAction func onDropDownBtnClicked(_ sender: Any) {
         print("btn pressed")
         let button = sender as! UIButton
-        self.delegate?.customCell(cell: self, didTappedDropDown: button)
+        self.delegate?.selectedQuestionCell(cell: self, didTappedDropDown: button)
     }
 }

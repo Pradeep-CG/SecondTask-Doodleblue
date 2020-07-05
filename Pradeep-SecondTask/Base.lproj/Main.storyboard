@@ -92,7 +92,7 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="  " textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="rwb-3b-8BN">
-                                                    <rect key="frame" x="32" y="12" width="362" height="21"/>
+                                                    <rect key="frame" x="32" y="12" width="312" height="21"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -107,17 +107,32 @@
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="i9z-eW-ra4">
+                                                    <rect key="frame" x="364" y="5" width="35" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="0Fk-3w-cAZ"/>
+                                                        <constraint firstAttribute="width" constant="35" id="cRV-9V-pcm"/>
+                                                    </constraints>
+                                                    <state key="normal" backgroundImage="erase"/>
+                                                    <connections>
+                                                        <action selector="onEraseBtnClicked:" destination="j33-wA-EKU" eventType="touchUpInside" id="6WC-AU-Sbf"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstAttribute="trailing" secondItem="rwb-3b-8BN" secondAttribute="trailing" constant="20" id="0Pb-hL-AAZ"/>
+                                                <constraint firstAttribute="trailing" secondItem="rwb-3b-8BN" secondAttribute="trailing" constant="70" id="0Pb-hL-AAZ"/>
+                                                <constraint firstItem="i9z-eW-ra4" firstAttribute="centerY" secondItem="avJ-VB-HAT" secondAttribute="centerY" id="3o0-vM-k5B"/>
+                                                <constraint firstItem="i9z-eW-ra4" firstAttribute="centerY" secondItem="avJ-VB-HAT" secondAttribute="centerY" id="67U-gi-UfS"/>
                                                 <constraint firstAttribute="bottom" secondItem="rwb-3b-8BN" secondAttribute="bottom" constant="11.5" id="CW3-eM-sMI"/>
                                                 <constraint firstItem="rwb-3b-8BN" firstAttribute="leading" secondItem="trp-Sg-9GE" secondAttribute="trailing" constant="10" id="TO6-7C-z8o"/>
                                                 <constraint firstItem="rwb-3b-8BN" firstAttribute="top" secondItem="avJ-VB-HAT" secondAttribute="top" constant="12" id="ei5-cR-82y"/>
                                                 <constraint firstItem="trp-Sg-9GE" firstAttribute="leading" secondItem="avJ-VB-HAT" secondAttribute="leading" constant="10" id="maf-Yo-1Bq"/>
+                                                <constraint firstAttribute="trailing" secondItem="i9z-eW-ra4" secondAttribute="trailing" constant="15" id="oiv-2U-330"/>
                                                 <constraint firstItem="trp-Sg-9GE" firstAttribute="top" secondItem="avJ-VB-HAT" secondAttribute="top" constant="12" id="vZM-tq-MUg"/>
                                             </constraints>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="eraseBtn" destination="i9z-eW-ra4" id="tlO-L5-DWp"/>
                                             <outlet property="sequenceLbl" destination="rwb-3b-8BN" id="Acj-kO-cML"/>
                                             <outlet property="serialNoLbl" destination="trp-Sg-9GE" id="74W-v8-YoG"/>
                                         </connections>
@@ -144,10 +159,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2HT-EF-ezV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1972" y="88"/>
+            <point key="canvasLocation" x="1971.0144927536232" y="87.723214285714278"/>
         </scene>
     </scenes>
     <resources>
         <image name="chevron.down" catalog="system" width="64" height="36"/>
+        <image name="erase" width="113" height="112"/>
     </resources>
 </document>

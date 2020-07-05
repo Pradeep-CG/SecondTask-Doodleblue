@@ -8,12 +8,17 @@
 
 import UIKit
 
+protocol sequeceCellDelegate:class {
+    func selectedSequenceCell(cell:SequenceTableViewCell, didTappedEraseDown button:UIButton)
+}
 class SequenceTableViewCell: UITableViewCell {
 
     @IBOutlet weak var sequenceLbl: UILabel!
     @IBOutlet weak var serialNoLbl: UILabel!
     
-
+    @IBOutlet weak var eraseBtn: UIButton!
+    
+    weak var delegate:sequeceCellDelegate?
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -26,5 +31,10 @@ class SequenceTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    @IBAction func onEraseBtnClicked(_ sender: Any) {
+        
+        let button = sender as! UIButton
+        self.delegate?.selectedSequenceCell(cell: self, didTappedEraseDown: button)
+    }
     
 }
