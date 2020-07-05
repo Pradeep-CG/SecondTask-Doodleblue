@@ -9,7 +9,7 @@
 import UIKit
 
 class QuestionViewController: UIViewController {
-
+    
     @IBOutlet weak var questionTableView: UITableView!
     var questionArray:[QuestionModel]?
     var dropdownArray = [Int]()
@@ -18,6 +18,11 @@ class QuestionViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let gradientLayer = CAGradientLayer()
+        gradientLayer.frame = self.view.bounds
+        gradientLayer.colors = [UIColor.gray.cgColor, UIColor.white.cgColor, UIColor.white.cgColor]
+        self.view.layer.insertSublayer(gradientLayer, at: 0)
         
         questionArray = Common.getQuestionModel()
         generateDropDownArray()
@@ -40,9 +45,17 @@ class QuestionViewController: UIViewController {
     }
     @objc func handleTap(_ sender: UITapGestureRecognizer? = nil) {
         
-       if let viewWithTag = self.view.viewWithTag(101) {
+        if let viewWithTag = self.view.viewWithTag(101) {
             viewWithTag.removeFromSuperview()
             self.selectedRowIndex = -1
+        }
+    }
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        if scrollView == self.questionTableView {
+            if let viewWithTag = self.view.viewWithTag(101) {
+                viewWithTag.removeFromSuperview()
+                self.selectedRowIndex = -1
+            }
         }
     }
 }
@@ -68,7 +81,7 @@ extension QuestionViewController: QuestionCellDelegate{
             var showRect    = cell.convert(buttonFrame, to: self.questionTableView)
             showRect        = self.questionTableView.convert(showRect, to: view)
             
-            let yCord = (showRect.origin.y + showRect.size.height)
+            let yCord = (showRect.origin.y + showRect.size.height - 5)
             
             print("rect \(showRect)")
             print("y = \(showRect.origin.y)")
@@ -81,15 +94,19 @@ extension QuestionViewController: QuestionCellDelegate{
             
             let dropDownView = UIView.init(frame: CGRect(x: showRect.origin.x - 45, y: yCord, width: widthValue, height: heightValue))
             dropDownView.tag = 101
-            dropDownView.backgroundColor = .purple
             dropDownView.layer.borderWidth = 1
-            dropDownView.layer.borderColor = UIColor.gray.cgColor
+            dropDownView.layer.borderColor = UIColor.white.cgColor
+            dropDownView.layer.masksToBounds = false
+            dropDownView.layer.shadowRadius = 4
+            dropDownView.layer.shadowOpacity = 1
+            dropDownView.layer.shadowColor = UIColor.gray.cgColor
+            dropDownView.layer.shadowOffset = CGSize(width: 0 , height:2)
             
             for item in 0..<dropdownArray.count {
                 let button = UIButton.init(frame: CGRect(x: 0, y: yCoordinate, width: widthValue, height: buttonHeight))
                 button.setTitle("\(dropdownArray[item])", for: .normal)
-                button.setTitleColor(.black, for: .normal)
-                button.backgroundColor = .yellow
+                button.setTitleColor(.white, for: .normal)
+                button.backgroundColor = .gray
                 button.tag = item
                 button.addTarget(self, action: #selector(self.onDropDownBtnClicked), for: .touchUpInside)
                 dropDownView.addSubview(button)
@@ -101,29 +118,25 @@ extension QuestionViewController: QuestionCellDelegate{
                 dropDownView.addSubview(label)
             }
             self.view.addSubview(dropDownView)
-            //self.questionTableView.addSubview(dropDownView)
         }
     }
     
-   @objc func onDropDownBtnClicked(sender: UIButton!) {
-       
-      print("button tag =\(sender.tag)")
-    let selectedValue = sender.tag
-    questionArray?[selectedRowIndex].serialNo = "\(dropdownArray[selectedValue])"
-     
-    //self.questionTableView.reloadRows(at: [IndexPath(row: selectedRowIndex, section: 0)], with: .automatic)
-    self.sequenceDictionary["\(dropdownArray[selectedValue])"] = questionArray?[selectedRowIndex].question
+    @objc func onDropDownBtnClicked(sender: UIButton!) {
+        
+        print("button tag =\(sender.tag)")
+        let selectedValue = sender.tag
+        questionArray?[selectedRowIndex].serialNo = "\(dropdownArray[selectedValue])"
+        self.sequenceDictionary["\(dropdownArray[selectedValue])"] = questionArray?[selectedRowIndex].question
+        self.questionTableView.reloadData()
+        dropdownArray.remove(at: sender.tag)
+        print("removed array = \(dropdownArray)")
+        
+        if let viewWithTag = self.view.viewWithTag(101) {
+            viewWithTag.removeFromSuperview()
+            self.selectedRowIndex = -1
+        }
+    }
     
-    // self.questionTableView.reloadRows(at: [IndexPath(row: sequenceIndex, section: 1)], with: .automatic)
-    self.questionTableView.reloadData()
-    dropdownArray.remove(at: sender.tag)
-     print("removed array = \(dropdownArray)")
-    
-      if let viewWithTag = self.view.viewWithTag(101) {
-          viewWithTag.removeFromSuperview()
-          self.selectedRowIndex = -1
-      }
-   }
 }
 
 extension QuestionViewController: SequenceCellDelegate{
@@ -132,7 +145,7 @@ extension QuestionViewController: SequenceCellDelegate{
         
         guard let indexPath = self.questionTableView.indexPath(for: cell) else { return }
         print("Button tapped on row \(indexPath.row)")
-       
+        
         for item in 0..<questionArray!.count {
             if questionArray?[item].question == sequenceDictionary["\(indexPath.row + 1)"] {
                 let serialNo = Int(questionArray?[item].serialNo ?? "0") ?? 0
@@ -164,19 +177,13 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
         else{
             label.text = "Here the question will be ordered in the corrent sequence"
         }
-        label.font = UIFont(name: "futuraPTMediumFont", size: 16) // my custom font
-       //f label.textColor = UIColor.gray// my custom colour
-
+        label.font = UIFont(name: "futuraPTMediumFont", size: 16)
+        
         headerView.addSubview(label)
-
+        
         return headerView
     }
-    /*
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        let footerView = UIView.init(frame: CGRect.init(x: 0, y: 0, width: tableView.frame.width, height: 50))
-        footerView.backgroundColor = .gray
-        return footerView
-    }*/
+
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         return 50
     }
@@ -213,14 +220,4 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
             return cell
         }
     }
-    /*
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if section == 0 {
-            return 60.0
-        }
-        else{
-            return 0.0
-        }
-    }
-*/
 }

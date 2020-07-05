@@ -42,13 +42,13 @@ class JumbledTableViewCell: UITableViewCell {
         jumbledLbl.layer.cornerRadius = 10
         jumbledLbl.clipsToBounds = true
     }
-
+    
     override func setSelected(_ selected: Bool, animated: Bool) {
         super.setSelected(selected, animated: animated)
-
+        
         // Configure the view for the selected state
     }
-
+    
     @IBAction func onDropDownBtnClicked(_ sender: Any) {
         print("btn pressed")
         let button = sender as! UIButton
