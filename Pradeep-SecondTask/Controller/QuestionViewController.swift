@@ -175,7 +175,7 @@ extension QuestionViewController: UITableViewDelegate, UITableViewDataSource{
             label.text = "* The given statements are in jumbled order, Use the dropdown to set the correct order"
         }
         else{
-            label.text = "Here the question will be ordered in the corrent sequence"
+            label.text = "Here the question will be ordered in the correct sequence"
         }
         label.font = UIFont(name: "futuraPTMediumFont", size: 16)
         
